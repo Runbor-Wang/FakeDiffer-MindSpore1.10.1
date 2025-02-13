@@ -1,0 +1,37 @@
+# #########该文件为数据集信息文件#########
+train_cfg:
+#  root: "path/to/data"
+  root: "/root/autodl-tmp/Datasets/Celeb-DF"  # ################################
+  split: "train"
+  balance: True
+#  log_steps: 1000
+  log_steps: 1000
+#  val_steps: 1000
+  val_steps: 1000
+#  num_steps: 92000
+#  num_steps: 36800
+  transforms:
+    - name: "Resize"
+      params:
+        height: 299
+        width: 299
+    - name: "HorizontalFlip"
+      params:
+        p: 0.5
+    - name: "Normalize"
+      params:
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+test_cfg:
+  root: "/root/autodl-tmp/Datasets/Celeb-DF"  # ################################
+  split: "test"
+  balance: False
+  transforms:
+    - name: "Resize"
+      params:
+        height: 299
+        width: 299
+    - name: "Normalize"
+      params:
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]

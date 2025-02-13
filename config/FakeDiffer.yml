@@ -1,0 +1,64 @@
+# #########该文件为模型训练与验证参数文件#########
+model:
+#  recons_name: ReconstructionXception
+#  recons_initials: None
+#  differ_name: Differ
+  model_name: FakeDiffer
+  num_classes: 1
+data:
+#  train_batch_size: 32
+  train_batch_size: 64
+#  val_batch_size: 64
+  val_batch_size: 128
+#  test_batch_size: 64
+  test_batch_size: 128
+#  name: FaceForensics  # ################################
+#  name: CelebDF
+  name: WildDeepfake
+#  file: "./config/dataset/faceforensics.yml"
+#  file: "./config/dataset/celeb_df.yml"
+  file: "./config/dataset/wilddeepfake.yml"
+  train_branch: "train_cfg"
+  val_branch: "test_cfg"
+  test_branch: "test_cfg"
+config:
+  lambda_1: 0.1
+  lambda_2: 0.1
+  distribute:
+    backend: nccl
+  start_decay: 4
+  optimizer:
+    name: adam
+#    lr: 0.0002
+    lr: 0.0001
+    weight_decay: 0.00001
+  start_decay_after: 10000
+  scheduler:
+    name: StepLR
+    # step_size: 20000
+    step_size: 3000
+    gamma: 0.9
+  load_pretrain: False
+  pretrain_dir: "/root/autodl-tmp/FakeDiffer/runs_2024-07-21-23:42:28/FakeDiffer/Celeb-DF"
+#  pretrain_reconstruction_pth: "best_reconstruction_model_58000.pth"
+  pretrain_pth: "latest_reconstruction_model.pth"
+  resume: False
+  resume_best: False
+#  id: FF++c40  # ################################
+#  id: Celeb-DF
+  id: WildDeepfake
+  recons_loss: mse
+  classify_loss: binary_ce
+  metric: Acc
+  debug: False
+
+  num_steps: 100000
+  num_epoch: 20
+
+  warmup_step: 10000
+
+  test_mode: "reconstruction"
+# ["reconstruction", "differ", "reconstruction_differ"]
+
+  device: "cuda"
+#  ckpt: best_model_1000
