@@ -1,4 +1,3 @@
-import torch
 import yaml
 import argparse
 from trainer import ExpTester
@@ -13,9 +12,6 @@ def arg_parser():
 
 
 if __name__ == '__main__':
-    torch.backends.cudnn.benchmark = True
-    torch.backends.cudnn.enabled = True
-
     arg = arg_parser()
     config = arg.config
 
